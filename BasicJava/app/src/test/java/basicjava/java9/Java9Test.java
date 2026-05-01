@@ -28,9 +28,12 @@ public class Java9Test {
     }
 
     @Test
-    void unicode7() {
+    void unicode() {
         // 🎔 on unicode 7
         assertTrue(Character.isDefined(0x1F394));
+        
+        // 🍿on unicode 8
+        assertTrue(Character.isDefined(0x1F37F));
     }
 
     @Test
