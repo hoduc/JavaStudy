@@ -5,9 +5,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
+import java.awt.*;
+import java.awt.image.BaseMultiResolutionImage;
+import java.awt.image.BufferedImage;
 
 public class Java9 {
     public static class EchoProcess {
@@ -42,9 +45,34 @@ public class Java9 {
         }
     }
 
+    public static class MultiResolutionImage {
+        private final BaseMultiResolutionImage multiResImage;
+
+
+        public MultiResolutionImage(BufferedImage lowRes, BufferedImage highRes) {
+            createGraphics2D(lowRes, Color.RED);
+            createGraphics2D(highRes, Color.BLUE);
+            multiResImage = new BaseMultiResolutionImage(lowRes, highRes);
+        }
+
+        // why do we need this?
+        private void createGraphics2D(BufferedImage image, Color color) {
+            Graphics2D g1 = image.createGraphics();
+            g1.setColor(color);
+            g1.fillRect(0, 0, image.getWidth(), image.getHeight());
+            g1.dispose();
+        }
+
+        public Image getVariant(double width, double height) {
+            return multiResImage.getResolutionVariant(width, height);
+        }
+
+        public List<Image> getVariants() {
+            return multiResImage.getResolutionVariants();
+        }
+    }
+
     public static void main(String[] args) {
         // for quick sysout testing
-        System.out.println("Hello:" + new String(Character.toChars(0x1F394)));
-        System.out.println("Hellosb:" + new StringBuilder().appendCodePoint(0x1F394).toString());
     }
 }
