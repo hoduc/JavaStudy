@@ -9,8 +9,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class Java9Test {
     @Test
@@ -49,5 +53,24 @@ public class Java9Test {
         // 5. Get all available variants
         List<Image> variants = multiResImage.getVariants();
         assertEquals(2, variants.size());
+    }
+
+    @Test
+    void collectionsFactory() {
+        // convenient creation methods for collections
+        Set<String> expectedSet = new HashSet<>();
+        expectedSet.add("a");
+        expectedSet.add("b");
+        assertEquals(expectedSet, Set.of("a", "b"));
+
+        List<String> expectedList = new ArrayList<>();
+        expectedList.add("a");
+        expectedList.add("b");
+        assertEquals(expectedList, List.of("a", "b"));
+
+        Map<String, Integer> expecteMap = new HashMap<>();
+        expecteMap.put("a", 1);
+        expecteMap.put("b", 2);
+        assertEquals(expecteMap, Map.of("a", 1, "b", 2));
     }
 }
