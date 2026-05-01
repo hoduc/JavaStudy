@@ -43,6 +43,8 @@ public class Java9 {
     }
 
     public static void main(String[] args) {
-        new EchoProcess().echo("hello", "world");
+        // for quick sysout testing
+        System.out.println("Hello:" + new String(Character.toChars(0x1F394)));
+        System.out.println("Hellosb:" + new StringBuilder().appendCodePoint(0x1F394).toString());
     }
 }

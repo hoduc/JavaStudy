@@ -20,6 +20,11 @@ public class Java9Test {
             assertTrue(processInfo.totalCpuDuration().isPresent());
             assertTrue(processInfo.user().isPresent());
         }
+    }
 
+    @Test
+    void unicode7() {
+        // 🎔 on unicode 7
+        assertTrue(Character.isDefined(0x1F394));
     }
 }
