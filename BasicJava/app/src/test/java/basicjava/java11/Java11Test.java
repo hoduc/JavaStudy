@@ -22,4 +22,10 @@ public class Java11Test {
             .toList()
         );
     }
+
+    @Test
+    void unicode() {
+        // 🥇 on unicode 10
+        assertTrue(Character.isDefined(0x1F948));
+    }
 }
