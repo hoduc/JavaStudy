@@ -8,6 +8,7 @@ Catching up with the latest of Java and its eco system.
    - [jshell](https://docs.oracle.com/en/java/javase/25/jshell/introduction-jshell.html#GUID-465BA4F5-E77D-456F-BCB7-D826AC1E18AE)
    - Idea: given two javadocs link show the diff ?
    - GC comparison charts and features ?
+   - [Fiber/Projetc Loom](https://openjdk.org/projects/loom/)
 
 - [ ] Spring
 
