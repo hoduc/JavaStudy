@@ -1,7 +1,6 @@
 package basicjava.java11;
 
 import java.io.IOException;
-import java.net.Authenticator;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -16,8 +15,7 @@ public class Java11 {
         public static void main(String[] args) throws IOException, InterruptedException {
             var client = HttpClient.newBuilder()
                                     .version(Version.HTTP_2)
-                                    .followRedirects(Redirect.NORMAL)
-                                    // .authenticator(Authenticator.getDefault())
+                                    .followRedirects(Redirect.NORMAL)                                    
                                     .build();
             
             var google_dot_com_request  = HttpRequest.newBuilder()
