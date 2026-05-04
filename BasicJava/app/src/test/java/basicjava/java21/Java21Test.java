@@ -11,6 +11,34 @@ import java.util.TreeSet;
 import org.junit.jupiter.api.Test;
 
 public class Java21Test {
+    sealed interface Shape
+        permits Rectangle {
+            double area();
+        }
+    
+    record Point(int x, int y) {};
+    record Rectangle(Point topLeft, Point topRight, Point bottomLeft, Point bottomRight) implements Shape {
+
+        @Override
+        public double area() {
+            // w * h
+            return Math.abs(topRight.x - topLeft.x) * Math.abs(bottomLeft.y - topLeft.y);
+        }
+
+    }
+
+    // it kinda misnomer that our switch just functioning as the logging
+    // for now since the shape.area() actually bounded correctly
+    double area(Shape shape) {
+        return switch(shape) {
+            case Rectangle(var topLeft, var topRight, var bottomLeft, var bottomRight) -> {
+                System.out.println(String.format("(%s, %s, %s, %s)", topLeft, topRight, bottomLeft, bottomRight));
+                yield shape.area();
+            }
+            default -> 0;
+        };
+    }
+
 
     void assertSequencedCollection(SequencedCollection<Integer> oneTwoThree) {
         var threeTwoOne = List.of(3, 2, 1).iterator();
@@ -37,6 +65,53 @@ public class Java21Test {
         assertSequencedCollection(new LinkedList<>(oneTwoThree));
         assertSequencedCollection(new ArrayDeque<>(oneTwoThree));
         assertSequencedCollection(new TreeSet<>(List.of(1, 3, 2))); // will be [1,2,3] bc of natural order
+    }
+
+    @Test
+    void recordPatternMatching() {
+        assertEquals(12.0, 
+            area(
+                new Rectangle(
+                    new Point(0, 3),
+                    new Point(4, 3),
+                    new Point(0, 0),
+                    new Point(4, 0)
+                )
+            )
+        );
+    }
+
+    private static String runtimeType(Object obj) {
+        String t = "unknown";
+        // switch does not do pattern matching yet until java 21
+        if (obj instanceof String s) {
+            t = "[" + s + "]" + ":string";
+        } else if (obj instanceof Integer i) {
+            t = "[" + i + "]" + ":int";
+        } else if (obj instanceof Point p) {
+            t = "[" + p + "]" + ":Point";
+        } else if (obj instanceof Rectangle r) {
+            t = "[" + r + "]" + ":Rectangle";
+        }
+        return  t;
+    }
+
+    @Test
+    void patternMatchingInstanceof() {
+        assertEquals("[hello]:string", runtimeType("hello"));
+        assertEquals("[42]:int", runtimeType(42));
+        assertEquals("unknown", runtimeType(42.0));
+        assertEquals("[Point[x=0, y=0]]:Point", runtimeType(new Point(0, 0)));
+        assertEquals("[Rectangle[topLeft=Point[x=0, y=3], topRight=Point[x=4, y=3], bottomLeft=Point[x=0, y=0], bottomRight=Point[x=4, y=0]]]:Rectangle", 
+            runtimeType(
+                new Rectangle(
+                        new Point(0, 3),
+                        new Point(4, 3),
+                        new Point(0, 0),
+                        new Point(4, 0)
+                )
+            )
+        );
     }
     
 }
