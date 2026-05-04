@@ -7,6 +7,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.SequencedCollection;
 import java.util.TreeSet;
+import java.util.concurrent.Executors;
+import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
 
@@ -112,6 +114,38 @@ public class Java21Test {
                 )
             )
         );
+    }
+
+    @Test
+    void virtualThreads() throws InterruptedException {
+        // simple thread
+        var vt = Thread.startVirtualThread(() -> {
+            System.out.println("Virtual Thread Simple:" + Thread.currentThread());
+        });
+        vt.join();
+        
+        // thread builder
+        var vtb = Thread.ofVirtual()
+                    .name("vtb-", 1)
+                    .start(() -> {
+                        System.out.println("Virtual Thread Simple:" + Thread.currentThread());
+                    });
+        vtb.join();
+
+        // structured concurrency style
+        try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
+            IntStream.range(0, 10_000).forEach(i -> {
+                executor.submit(() -> {
+                    try{
+                        Thread.sleep(1000);
+                        System.out.println("Finished-" + i);
+                    } catch(InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+                    return i;
+                });
+            });
+        }
     }
     
 }
