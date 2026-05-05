@@ -2,7 +2,7 @@
 
 Catching up with the latest of Java and its eco system.
 
-- [ ] Basic Java
+- [ x ] Basic Java
    - [Java9](https://openjdk.org/projects/jdk9/)
    - [Module/Project Jigsaw](https://openjdk.org/projects/jigsaw/)
    - [jshell](https://docs.oracle.com/en/java/javase/25/jshell/introduction-jshell.html#GUID-465BA4F5-E77D-456F-BCB7-D826AC1E18AE)
@@ -11,5 +11,9 @@ Catching up with the latest of Java and its eco system.
    - [Fiber/Projetc Loom](https://openjdk.org/projects/loom/)
 
 - [ ] Spring
+   - MVC: Can render website with different paths
+   - Security: Can login on secured path. Add User from JPA
+ 
 
 - [ ] SQL / Hibernate / JPA
+   - Pull Database for user login/passwords.
