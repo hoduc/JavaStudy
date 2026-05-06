@@ -18,13 +18,28 @@ repositories {
 }
 
 dependencies {
+	// spring rest/mvc
 	implementation("org.springframework.boot:spring-boot-starter-webmvc")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
 	
+	// spring security
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
 	implementation("org.springframework.boot:spring-boot-starter-security-test")
+
+	// jpa
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	runtimeOnly("com.h2database:h2")
+	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("org.springframework.boot:spring-boot-starter-data-spa-test")
+
+	// lombok
+	compileOnly("org.projectlombok:lombok:1.18.46")
+	annotationProcessor("org.projectlombok:lombok:1.18.46")
+	testCompileOnly("org.projectlombok:lombok:1.18.46")
+	testAnnotationProcessor("org.projectlombok:lombok:1.18.46")
+	
 	
 	compileOnly("org.projectlombok:lombok")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
